@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/jk-brand-banner.png" alt="Jeevan Kumar — Risk. Governance. AI." width="280"></p>
+
 # Freight Risk Atlas
 
 An open assessment engine for freight and carrier fraud risk. You scope a movement, record what you
