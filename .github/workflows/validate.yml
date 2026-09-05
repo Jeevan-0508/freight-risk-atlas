@@ -25,4 +25,6 @@ jobs:
           print('in sync')
           EOF
       - name: App parses
-        run: node -e "new Function(require('fs').readFileSync('docs/app.js','utf8'))"
+        run: |
+          node -e "new Function(require('fs').readFileSync('docs/app.js','utf8'))"
+          node -e "new Function(require('fs').readFileSync('docs/visuals.js','utf8'))"

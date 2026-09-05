@@ -347,7 +347,22 @@ function reset() {
   renderAll();
 }
 
-function renderAll() { renderScope(); renderObs(); renderResults(); }
+function coverageMap() {
+  const m = new Map();
+  inScopePatterns().forEach(p => {
+    const s = scoreOf(p);
+    if (s.total && s.present) m.set(p.id, s.coverage);
+  });
+  return m;
+}
+
+function renderVisuals() {
+  const tlHost = $('viz-timeline');
+  if (!tlHost.childElementCount) tlHost.innerHTML = V.timeline(MODEL, PHASES).html;
+  $('viz-network').innerHTML = V.network(MODEL, coverageMap());
+}
+
+function renderAll() { renderScope(); renderObs(); renderResults(); renderVisuals(); }
 
 /* ---------- boot ---------- */
 
@@ -364,6 +379,13 @@ fetch('taxonomy.json', { cache: 'no-cache' })
     $('opt-phase').addEventListener('click', onOpt);
     $('obs').addEventListener('click', onTri);
     $('results').addEventListener('click', onResultClick);
+    V.bindTimeline($('viz-timeline'));
+    V.bindNetwork($('viz-network'), id => {
+      open.add(id);
+      renderResults();
+      const c = [...document.querySelectorAll('.res')].find(x => x.querySelector('.id').textContent === id);
+      if (c) c.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
     $('btn-example').addEventListener('click', loadExample);
     $('btn-reset').addEventListener('click', reset);
     $('btn-report').addEventListener('click', () => download('freight-risk-assessment.md', markdown(), 'text/markdown;charset=utf-8'));

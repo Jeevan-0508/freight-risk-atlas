@@ -9,6 +9,30 @@ that apply at that stage, and the regulatory duties the finding engages.
 
 It runs entirely in the browser. Nothing you type is transmitted, logged or stored.
 
+![The fraud landscape: detection timeline and pattern network](docs/screenshots/0-landscape.png)
+
+## The landscape
+
+Before you assess anything, the tool shows you the whole risk model in two pictures.
+
+**Where detection is possible.** All 77 indicators placed at the stage they become observable and
+sized by how much they tell you. The shape carries an argument: **128 of the model's 317 points of
+indicator weight — 40% — only exist after the loss has already happened, and just 27% is available
+before the load is awarded.** Pre-award is the only stage where a loss can be prevented rather than
+explained, and it is the thinnest stage in the model. That is the case for moving carrier checks
+earlier, made from the data rather than asserted.
+
+**How the patterns connect.** The 12 patterns as a graph, linked where one enables or conceals
+another. Two clusters fall out of the real data: an identity-and-contract cluster (phantom carrier,
+identity takeover, double brokering, insurance and subcontracting fraud) and a physical-loss cluster
+(pilferage, parking theft, seal tampering, GPS spoofing, insider collusion) — 19 relationships fall
+inside those two clusters and only 3 cross between them. Confirming one pattern
+tells you which neighbours to check next. As you record evidence, the patterns it supports light up
+in the graph, and clicking any node jumps to that finding.
+
+Both are hand-rolled SVG with no charting library, and both are computed from the taxonomy at load
+time — there are no hard-coded numbers in either.
+
 ![Ranked findings for a worked double-brokering case](docs/screenshots/3-findings.png)
 
 ## What problem this solves
@@ -116,11 +140,14 @@ check that the exported report contains no `undefined` or `NaN`.
 | Model loading, scope controls, observation rows, live re-ranking | 20 |
 | Worked example, findings detail, gates, stage filtering, reset | 21 |
 | Markdown and JSON export, coverage arithmetic, scope integrity | 24 |
+| Favicon decodes as an inline data URI | 5 |
+| Detection timeline: weights, shares, dot sizing, tooltips, legend | 20 |
+| Pattern network: 12 nodes, 22 edges, no overlap, stable layout, live highlighting, click-through | 11 |
 | Mobile layout and overflow at 360 / 390 / 412 px | 7 × 3 |
 
 The same three-step flow at 390 px, with no horizontal overflow at any tested width:
 
-<img src="docs/screenshots/5-mobile.png" width="330" alt="Findings on a 390 px viewport">
+<img src="docs/screenshots/5-mobile.png" width="300" alt="Findings on a 390 px viewport"> <img src="docs/screenshots/6-landscape-mobile.png" width="300" alt="The landscape visuals on a 390 px viewport">
 
 All pass. CI additionally validates the risk model, confirms `docs/taxonomy.json` matches
 `data/taxonomy.json`, and parses the application.
