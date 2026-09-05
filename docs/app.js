@@ -357,6 +357,9 @@ function coverageMap() {
 }
 
 function renderVisuals() {
+  // the visuals are a presentation layer; if visuals.js did not load, the
+  // assessment must still work rather than dying inside renderAll
+  if (typeof V === 'undefined') { $('landscape').style.display = 'none'; return; }
   const tlHost = $('viz-timeline');
   if (!tlHost.childElementCount) tlHost.innerHTML = V.timeline(MODEL, PHASES).html;
   $('viz-network').innerHTML = V.network(MODEL, coverageMap());
@@ -379,6 +382,7 @@ fetch('taxonomy.json', { cache: 'no-cache' })
     $('opt-phase').addEventListener('click', onOpt);
     $('obs').addEventListener('click', onTri);
     $('results').addEventListener('click', onResultClick);
+    if (typeof V !== 'undefined') {
     V.bindTimeline($('viz-timeline'));
     V.bindNetwork($('viz-network'), id => {
       open.add(id);
@@ -386,6 +390,7 @@ fetch('taxonomy.json', { cache: 'no-cache' })
       const c = [...document.querySelectorAll('.res')].find(x => x.querySelector('.id').textContent === id);
       if (c) c.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
+    }
     $('btn-example').addEventListener('click', loadExample);
     $('btn-reset').addEventListener('click', reset);
     $('btn-report').addEventListener('click', () => download('freight-risk-assessment.md', markdown(), 'text/markdown;charset=utf-8'));
