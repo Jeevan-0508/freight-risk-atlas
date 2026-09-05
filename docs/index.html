@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Freight Risk Atlas</title>
+<meta name="description" content="An open assessment engine for freight and carrier fraud risk. Scope a lane, work the observable indicators, and get patterns ranked by indicator coverage with false-positive gates, countermeasures and regulatory hooks.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header><div class="wrap">
+  <h1>Freight Risk Atlas</h1>
+  <p class="sub">A structured way to turn what you can actually observe about a carrier or a lane into a
+  defensible fraud-risk assessment. Scope the movement, record the indicators, and see which fraud
+  patterns the evidence supports &mdash; together with the false positives you must rule out first,
+  the countermeasures that apply at that stage, and the regulatory duties engaged.</p>
+  <p class="src" id="src">Loading risk model&hellip;</p>
+</div></header>
+
+<main>
+  <div id="err"></div>
+
+  <p class="note"><b>This tool does not estimate a probability of fraud.</b> It reports
+  <em>indicator coverage</em>: the share of a pattern's in-scope indicator weight that you have
+  confirmed present. High coverage means the evidence you hold is consistent with that pattern and
+  warrants investigation &mdash; not that fraud has occurred. Every weight, indicator and
+  countermeasure comes from the cited open taxonomy, and nothing here is legal advice.</p>
+
+  <section class="step" id="step1">
+    <h2><i>1</i> Scope the movement <em>filters the indicator set</em></h2>
+    <div class="inner">
+      <p class="hint">Only indicators that are observable for this geography, mode and stage are put to you.
+      Scoping honestly matters more than answering a lot of questions.</p>
+      <fieldset><legend>Geography</legend><div class="opts" id="opt-geo"></div></fieldset>
+      <fieldset><legend>Transport mode</legend><div class="opts" id="opt-mode"></div></fieldset>
+      <fieldset><legend>Stage &mdash; where you are in the movement</legend><div class="opts" id="opt-phase"></div></fieldset>
+      <div class="bar">
+        <button class="ghost" id="btn-example">Load worked example</button>
+        <button class="ghost" id="btn-reset">Reset</button>
+        <span class="scope" id="scope"></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="step" id="step2">
+    <h2><i>2</i> Record what you observe <em id="obs-count"></em></h2>
+    <div class="inner">
+      <p class="hint">Mark an indicator <b>Present</b> only where you have a source you could show
+      someone. <b>Absent</b> means you checked and it is not there. <b>Unknown</b> is the honest default
+      and is reported as an evidence gap rather than quietly counted as absent.</p>
+      <div id="obs"></div>
+    </div>
+  </section>
+
+  <section class="step" id="step3">
+    <h2><i>3</i> Findings <em id="find-count"></em></h2>
+    <div class="inner">
+      <div class="bar" style="margin-bottom:16px">
+        <button class="act" id="btn-report">Export assessment report</button>
+        <button class="ghost" id="btn-json">Export JSON</button>
+      </div>
+      <div id="results"></div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">
+  Risk model: <a href="https://github.com/Jeevan-0508/freight-fraud-taxonomy">Freight &amp; Carrier Fraud Risk Taxonomy</a>
+  (CC BY 4.0). Atlas source: <a href="https://github.com/Jeevan-0508/freight-risk-atlas">github.com/Jeevan-0508/freight-risk-atlas</a>.<br>
+  Runs entirely in your browser. Nothing you enter is transmitted or stored anywhere.
+  Contains no confidential or employer-specific material, and is not legal advice.
+</div></footer>
+
+<script src="app.js"></script>
+</body>
+</html>
