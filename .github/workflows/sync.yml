@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   sync:
@@ -18,14 +19,20 @@ jobs:
           python-version: '3.x'
       - name: Sync taxonomy
         run: python scripts/sync_taxonomy.py
-      - name: Commit if the risk model changed
-        run: |
-          if [ -n "$(git status --porcelain)" ]; then
-            git config user.name  'github-actions[bot]'
-            git config user.email 'github-actions[bot]@users.noreply.github.com'
-            git add data/taxonomy.json docs/taxonomy.json
-            git commit -m 'Sync risk model from freight-fraud-taxonomy'
-            git push
-          else
-            echo 'Risk model already up to date.'
-          fi
+      - name: Propose taxonomy update for human review
+        uses: peter-evans/create-pull-request@v8
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: automation/taxonomy-sync
+          delete-branch: true
+          add-paths: |
+            data/taxonomy.json
+            docs/taxonomy.json
+          commit-message: 'Sync risk model from freight-fraud-taxonomy'
+          title: 'Review upstream freight fraud taxonomy update'
+          body: |
+            This pull request updates Atlas's local taxonomy copy from the upstream repository.
+
+            The sync script checks structure and required fields. It does not validate empirical prevalence, severity, or the evidentiary basis for individual indicators.
+
+            Please review the source version and complete diff before merging. No taxonomy update is promoted automatically.
