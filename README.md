@@ -17,10 +17,10 @@ It runs entirely in the browser. Nothing you type is transmitted, logged or stor
 
 Before you assess anything, the tool shows you the whole risk model in two pictures.
 
-**Where detection is possible.** All 77 indicators placed at the stage they become observable and
-sized by how much they tell you. The shape carries an argument: **128 of the model's 317 points of
-indicator weight — 40% — only exist after the loss has already happened, and just 27% is available
-before the load is awarded.** Pre-award is the only stage where a loss can be prevented rather than
+**Where detection is possible.** All 87 indicators placed at the stage they become observable and
+sized by how much they tell you. The shape carries an argument: **141 of the model's 359 points of
+indicator weight — 39% — only exist after the loss has already happened, and 25% is available before
+the load is awarded.** Pre-award is the only stage where a loss can be prevented rather than
 explained, and it is the thinnest stage in the model. That is the case for moving carrier checks
 earlier, made from the data rather than asserted.
 
@@ -107,7 +107,7 @@ false-positive checklist and its state, and the regulatory hooks engaged.
 The Atlas has no risk logic of its own. Patterns, indicators, weights, false positives,
 countermeasures and regulatory hooks all come from the
 **[Freight & Carrier Fraud Risk Taxonomy](https://github.com/Jeevan-0508/freight-fraud-taxonomy)**
-(12 patterns, 77 indicators, 137 countermeasures, CC BY 4.0), which is compiled from public
+(12 patterns, 87 indicators, 138 countermeasures, CC BY 4.0), which is compiled from public
 industry, law-enforcement and regulatory sources.
 
 A copy lives in this repository at `data/taxonomy.json` so the site never depends on a cross-origin
