@@ -5,6 +5,7 @@
 <p align="center">
   <a href="https://jeevan-0508.github.io/freight-risk-atlas/">Open the live tool</a> ·
   <a href="#the-assessment-flow">Assessment flow</a> ·
+  <a href="docs/getting-started.md">Technical docs</a> ·
   <a href="#run-locally">Run locally</a>
 </p>
 
