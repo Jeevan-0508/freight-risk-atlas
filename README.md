@@ -1,162 +1,63 @@
-<p align="center"><img src="assets/jk-brand-banner.png" alt="Jeevan Siddhabhaktula — Risk. Governance. AI." width="280"></p>
+<p align="center">
+  <img src="assets/hero.svg" alt="Freight Risk Atlas — scope a movement, weigh the evidence, challenge the call" width="100%">
+</p>
+
+<p align="center">
+  <a href="https://jeevan-0508.github.io/freight-risk-atlas/">Open the live tool</a> ·
+  <a href="#the-assessment-flow">Assessment flow</a> ·
+  <a href="#run-locally">Run locally</a>
+</p>
 
 # Freight Risk Atlas
 
-An open assessment engine for freight and carrier fraud risk. You scope a movement, record what you
-can actually observe about the carrier or the lane, and it tells you which fraud patterns the
-evidence supports — together with the false positives you have to rule out first, the countermeasures
-that apply at that stage, and the regulatory duties the finding engages.
+### A browser-first assessment engine for freight and carrier fraud risk.
 
-**Live tool: https://jeevan-0508.github.io/freight-risk-atlas/**
+Freight Risk Atlas helps you scope a movement, record what you can actually observe, test which patterns the evidence supports, and keep the false positives and countermeasures beside the finding.
 
-It runs entirely in the browser. Nothing you type is transmitted, logged or stored.
+`FREIGHT RISK` · `OBSERVABLE SIGNALS` · `FALSE POSITIVES` · `BROWSER-ONLY`
 
-![The fraud landscape: detection timeline and pattern network](docs/screenshots/0-landscape.png)
+## Start with the tool
 
-## The landscape
+**[Open Freight Risk Atlas →](https://jeevan-0508.github.io/freight-risk-atlas/)**
 
-Before you assess anything, the tool shows you the whole risk model in two pictures.
+The tool starts with the full risk landscape, then narrows into a movement-specific assessment. It is designed to support a defensible next question—not to turn a weak signal into a verdict.
 
-**Where detection is possible.** All 87 indicators placed at the stage they become observable and
-sized by how much they tell you. The shape carries an argument: **141 of the model's 359 points of
-indicator weight — 39% — only exist after the loss has already happened, and 25% is available before
-the load is awarded.** Pre-award is the only stage where a loss can be prevented rather than
-explained, and it is the thinnest stage in the model. That is the case for moving carrier checks
-earlier, made from the data rather than asserted.
+## The assessment flow
 
-**How the patterns connect.** The 12 patterns as a graph, linked where one enables or conceals
-another. Two clusters fall out of the real data: an identity-and-contract cluster (phantom carrier,
-identity takeover, double brokering, insurance and subcontracting fraud) and a physical-loss cluster
-(pilferage, parking theft, seal tampering, GPS spoofing, insider collusion) — 19 relationships fall
-inside those two clusters and only 3 cross between them. Confirming one pattern
-tells you which neighbours to check next. As you record evidence, the patterns it supports light up
-in the graph, and clicking any node jumps to that finding.
+<p align="center"><img src="docs/screenshots/0-landscape.png" alt="Freight Risk Atlas landscape view" width="100%"></p>
 
-Both are hand-rolled SVG with no charting library, and both are computed from the taxonomy at load
-time — there are no hard-coded numbers in either.
+<table>
+  <tr>
+    <td width="50%"><img src="docs/screenshots/1-scope.png" alt="Scope a freight movement" width="100%"><br><strong>1 · Scope the movement</strong><br>Set the lane, stage, and context before interpreting a signal.</td>
+    <td width="50%"><img src="docs/screenshots/2-observations.png" alt="Record freight observations" width="100%"><br><strong>2 · Record observations</strong><br>Work from what is observable rather than assumed.</td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="docs/screenshots/3-findings.png" alt="Freight risk findings" width="100%"><br><strong>3 · Review findings</strong><br>See which patterns the evidence supports and what remains uncertain.</td>
+    <td width="50%"><img src="docs/screenshots/4-false-positive-gates.png" alt="False positive gates" width="100%"><br><strong>4 · Challenge the call</strong><br>Rule out benign explanations before escalating a case.</td>
+  </tr>
+</table>
 
-![Ranked findings for a worked double-brokering case](docs/screenshots/3-findings.png)
+## Why it matters
 
-## What problem this solves
+The most expensive fraud mistakes are often confident wrong calls. Atlas keeps the innocent explanation, the intervention point, and the next useful observation close to the same screen as the suspicion.
 
-Fraud indicator lists are easy to find. What they do not tell you is which combination of indicators
-justifies acting on a carrier, which benign explanation produces the same signal, or what you are
-entitled to do about it once you are confident. Investigators end up carrying that judgement in their
-heads, which makes assessments inconsistent between people and hard to defend afterwards.
+<details>
+<summary><strong>Model scope</strong></summary>
 
-The Atlas makes that judgement explicit and reproducible. Two people working the same carrier with
-the same evidence get the same finding, and the finding comes with its own audit trail.
+The taxonomy and assessment model cover European road-freight scenarios. The tool is an open assessment aid, not a production fraud detector, legal opinion, or guarantee of loss prevention.
 
-## What it deliberately does not do
+</details>
 
-**It does not estimate a probability of fraud.** It reports *indicator coverage*: the share of a
-pattern's in-scope indicator weight that you have confirmed present. A carrier at 83% coverage for
-double brokering is not "83% likely to be a double broker" — it means the evidence you hold matches
-most of what that pattern looks like, and the case warrants investigation.
+## Run locally
 
-This distinction is the whole point. A tool that emitted a fraud probability from a checklist would
-be inventing precision it does not have, and any risk decision built on it would be indefensible the
-first time a carrier challenged it.
-
-Three further honest limits:
-
-- **Unknown is not Absent.** Unanswered indicators are reported as evidence gaps with their weight,
-  never silently counted as clean. Every finding therefore carries an evidence-completeness figure
-  alongside its coverage, so a confident-looking score built on 30% of the evidence is visibly weak.
-- **Coverage says nothing about causation.** High coverage on a pattern with a plausible benign
-  explanation is not a finding until the false-positive gates are cleared. The tool blocks nothing —
-  it simply refuses to let you forget them.
-- **No incident data.** The Atlas contains no loss figures, no corridor statistics and no carrier
-  data. It reasons purely over the open taxonomy. Anything numeric you see is derived from the
-  indicator weights, and every weight is traceable to a public source.
-
-## How the assessment works
-
-**1. Scope the movement.** Geography, transport mode and stage. Only patterns that apply to that
-geography and mode are assessed, and only indicators observable at the selected stages are put to
-you. Scoping honestly matters more than answering a lot of questions.
-
-![Scoping the movement](docs/screenshots/1-scope.png)
-
-**2. Record what you observe.** Each in-scope indicator is presented with the evidence source it is
-observable in, the pattern it belongs to, and its weight. Mark it Present, Absent or leave it Unknown.
-
-![Recording observations against evidence sources](docs/screenshots/2-observations.png)
-
-**3. Read the findings.** For every in-scope pattern:
-
-```
-coverage     = (weight of indicators confirmed Present) / (weight of all in-scope indicators)
-completeness = (weight of indicators answered Present or Absent) / (weight of all in-scope indicators)
-```
-
-Coverage is banded as No / Weak / Substantial / Strong support at 0 / 15 / 35 / 60 percent. The bands
-are a reading aid, not a threshold for action — the false-positive gates are.
-
-![False-positive gates and stage-appropriate countermeasures](docs/screenshots/4-false-positive-gates.png)
-
-Countermeasures are filtered to the stages you selected, because advice you can no longer act on is
-noise: preventive measures for pre-award, detective for in-transit, responsive for post-event.
-
-**4. Export.** Markdown for the case file, JSON for a pipeline. Both record the scope, the risk-model
-version, the confirmed indicators with their evidence sources, the outstanding gaps, the
-false-positive checklist and its state, and the regulatory hooks engaged.
-
-## Risk model and provenance
-
-The Atlas has no risk logic of its own. Patterns, indicators, weights, false positives,
-countermeasures and regulatory hooks all come from the
-**[Freight & Carrier Fraud Risk Taxonomy](https://github.com/Jeevan-0508/freight-fraud-taxonomy)**
-(12 patterns, 87 indicators, 138 countermeasures, CC BY 4.0), which is compiled from public
-industry, law-enforcement and regulatory sources.
-
-A copy lives in this repository at `data/taxonomy.json` so the site never depends on a cross-origin
-fetch at page load. `scripts/sync_taxonomy.py` refreshes it and **refuses to write** a model that
-fails its structural checks — unknown indicator phase, weight outside 1–5, missing evidence source,
-or an empty countermeasure category. A weekly GitHub Action runs the sync and commits only when the
-upstream model has actually changed.
+No backend is required. Serve the repository with any static file server:
 
 ```bash
-python scripts/sync_taxonomy.py                 # pull from upstream and validate
-python scripts/sync_taxonomy.py data/taxonomy.json   # validate the local copy only
+python3 -m http.server 4173
 ```
 
-## Running it locally
+## Related systems
 
-No build step and no dependencies. The page fetches `taxonomy.json`, so it needs to be served over
-HTTP rather than opened from disk:
+[Fraud Watch](https://github.com/Jeevan-0508/fraud-watch) · [Freight Fraud Taxonomy](https://github.com/Jeevan-0508/freight-fraud-taxonomy) · [RISK//MESH](https://github.com/Jeevan-0508/Risk-Mesh)
 
-```bash
-python -m http.server 8000 --directory docs
-# then open http://localhost:8000
-```
-
-## Verification
-
-The site is tested against the real rendered DOM in headless Chrome rather than against its own
-source, including an independent recomputation of the coverage arithmetic from `taxonomy.json` and a
-check that the exported report contains no `undefined` or `NaN`.
-
-| Suite | Assertions |
-| --- | --- |
-| Model loading, scope controls, observation rows, live re-ranking | 20 |
-| Worked example, findings detail, gates, stage filtering, reset | 21 |
-| Markdown and JSON export, coverage arithmetic, scope integrity | 24 |
-| Favicon decodes as an inline data URI | 5 |
-| Detection timeline: weights, shares, dot sizing, tooltips, legend | 20 |
-| Pattern network: 12 nodes, 22 edges, no overlap, stable layout, live highlighting, click-through | 11 |
-| Mobile layout and overflow at 360 / 390 / 412 px | 7 × 3 |
-
-The same three-step flow at 390 px, with no horizontal overflow at any tested width:
-
-<img src="docs/screenshots/5-mobile.png" width="300" alt="Findings on a 390 px viewport"> <img src="docs/screenshots/6-landscape-mobile.png" width="300" alt="The landscape visuals on a 390 px viewport">
-
-All pass. CI additionally validates the risk model, confirms `docs/taxonomy.json` matches
-`data/taxonomy.json`, and parses the application.
-
-## Licence
-
-Code: MIT. Risk model: CC BY 4.0, from the Freight & Carrier Fraud Risk Taxonomy.
-
-Provided for risk-assessment purposes. It is not legal advice, it does not determine whether fraud
-has occurred, and it contains no confidential or employer-specific material.
+<p align="center"><sub>Built by <a href="https://github.com/Jeevan-0508">Jeevan Siddhabhaktula</a> · MIT licensed</sub></p>
